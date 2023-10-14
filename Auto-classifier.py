@@ -23,7 +23,6 @@ def predict(model, input_df):
     predictions = predictions_df['Layers'][0]
     return predictions
 
-df = pd.DataFrame()
 
 def run():
     add_selectbox = st.sidebar.selectbox(
