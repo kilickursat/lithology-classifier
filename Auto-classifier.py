@@ -72,15 +72,15 @@ def user_input_features():
         rock_type = st.selectbox('Rock type', ['sandstone', 'limestone', 'shale'])
         """
         
-      output_dict = {'VCS': 0, 'VG': 1,'VSG': 2 }
-      output_df = pd.DataFrame([output_dict])
+        output_dict = {'VCS': 0, 'VG': 1,'VSG': 2}
+        output_df = pd.DataFrame([output_dict])
 
 
-      if st.button("Predict"):
+        if st.button("Predict"):
             output = predict(model=model, input_df=input_df)
             output = '$' + str(output)
 
-      st.success('The output is {}'.format(output))
+        st.success('The output is {}'.format(output))
 """
         # Create inputs for the different features of the data
         output_lithology = st.selectbox('Output lithology', ['VSC', 'VG', 'VGS'])
