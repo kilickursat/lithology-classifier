@@ -26,8 +26,8 @@ def predict(model, input_df):
 
 def run():
     add_selectbox = st.sidebar.selectbox(
-        "How would you like to predict?",
-        "Online", "Batch"))
+    "How would you like to predict?",
+    ("Online", "Batch"))
 
     st.sidebar.info('This app is created to classify a soft ground tunnel lithology')
 
