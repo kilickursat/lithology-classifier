@@ -81,7 +81,7 @@ def run():
 
         st.success('The output is {}'.format(output))
         
-        setup(data=input_df, target="Layers")
+        setup(data=input_df)
 
         st.subheader("Classification Report")
         plot_model(model, plot='class_report',  plot_kwargs={'title': 'LightGBM Classifier Classification Report'}, display_format="streamlit")
