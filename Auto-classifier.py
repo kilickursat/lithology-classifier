@@ -17,6 +17,36 @@ setup()
 # Load the PyCaret model
 model = load_model('classifier-pipeline')
 
+
+##########################################################
+# Data loading options
+data_load_option = st.radio("Data Load Option", ("Online", "Batch"))
+
+if data_load_option == "Online":
+  # Online data loading
+  online_data = st.text_area("Enter data in CSV format")
+  if st.button("Load Data"):
+    try:
+      df = pd.read_csv(io.StringIO(online_data))
+    except Exception as e:
+      st.write(f"Error loading data: {e}")
+      df = None
+
+else:
+  # Batch data loading
+  uploaded_file = st.file_uploader("classification_model.xlsx", type="xlsx")
+  if uploaded_file is not None:
+    try:
+      df = pd.read_excel(uploaded_file)
+    except Exception as e:
+      st.write(f"Error loading data: {e}")
+      df = None
+
+if df is not None:
+  # Do something with the data
+  pass
+#########################################################
+"""
 # Data loading options
 data_load_option = st.radio("Data Load Option", ("Online", "Batch"))
 
@@ -39,7 +69,7 @@ def predict(input_data):
     return predictions['Label'][0]
   except Exception as e:
     raise st.ScriptRunner.StopExecution(e)
-
+"""
 # Create a Streamlit user interface
 st.title('Tunnel Lithology Identification Classifier')
 def run():
