@@ -11,8 +11,6 @@ import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
-def setup():
-    st.title("My Streamlit App")
 
 
 # Load the PyCaret model
@@ -26,6 +24,7 @@ def predict(model, input_df):
 
 
 def run():
+    setup()
     add_selectbox = st.sidebar.selectbox(
     "How would you like to predict?",
     ("Online", "Batch"))
