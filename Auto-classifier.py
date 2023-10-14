@@ -26,8 +26,7 @@ def predict(model, input_df):
 
 def run():
     add_selectbox = st.sidebar.selectbox(
-    "How would you like to predict?",
-    ("Online", "Batch"))
+        "How would you like to predict?","Online", "Batch"))
 
     st.sidebar.info('This app is created to classify a soft ground tunnel lithology')
 
@@ -81,6 +80,15 @@ def run():
 
         st.success('The output is {}'.format(output))
 
+        st.subheader("Classification Report")
+        plot_model(model, plot='class_report',  plot_kwargs={'title': 'LightGBM Classifier Classification Report'}, display_format="streamlit")
+
+        st.subheader("Confusion Matrix")
+        plot_model(model, plot='confusion_matrix', plot_kwargs={'title': 'LightGBM Classifier Confusion Matrix'}, display_format="streamlit")
+
+        st.subheader("Feature Importance")
+        interpret_model(model, display_format="streamlit")
+
     if add_selectbox == 'Batch':
 
         file_upload = st.file_uploader("Upload csv file for predictions", type=["csv"])
@@ -93,14 +101,3 @@ def run():
 if __name__ == '__main__':
     run()
 
-"""
-        # Calculate and display the confusion matrix
-        st.subheader("Classification report")
-        plot_model(model,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'},display_format="streamlit")
-        st.subheader("Confusion matrix")
-        plot_model(model,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'},display_format="streamlit")
-        st.subheader("Feature Importance:")
-        interpret_model(model,display_format="streamlit")
-"""
-
-          
