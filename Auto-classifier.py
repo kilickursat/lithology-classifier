@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 
-
+setup()
 
 # Load the PyCaret model
 model = load_model('classifier-pipeline')
