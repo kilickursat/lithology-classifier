@@ -57,34 +57,12 @@ with st.spinner('Predicting lithology class...'):
     st.write('Predicted lithology class:', prediction)
 
 # Calculate and display the confusion matrix
-confusion_matrix = metrics.confusion_matrix(y_train, predictions)
-fig, ax = plt.subplots()
-ax.matshow(confusion_matrix, cmap='Blues')
-ax.set_title("Confusion Matrix")
-ax.set_xlabel("Predicted Lithology Class")
-ax.set_ylabel("True Lithology Class")
-st.pyplot(fig)
 
-# Calculate and display the classification report
-classification_report = pycaret.classification_report(y_true, predictions)
-st.write(classification_report)
+plot_model(tuned_lightgbm_balanced,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'})
 
-# Calculate and display the ROC curve
-fpr, tpr, thresholds = metrics.roc_curve(y_train, predictions)
-fig, ax = plt.subplots()
-ax.plot(fpr, tpr, color='red', linestyle='dashed')
-ax.set_title("ROC Curve")
-ax.set_xlabel("False Positive Rate")
-ax.set_ylabel("True Positive Rate")
-st.pyplot(fig)
+plot_model(tuned_lightgbm_balanced,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'})
 
-# Calculate and display the SHAP bar plot
-explainer = shap.TreeExplainer(model)
-shap_values = explainer.shap_values(X_train)
-fig, ax = plt.subplots()
-ax.bar_chart(shap_values.mean(axis=0))
-ax.set_title("SHAP Bar Plot")
-st.pyplot(fig)
+interpret_model(tuned_lightgbm_balanced)
 
 # Allow users to load a batch data file
 uploaded_file = st.file_uploader('Upload a batch data file:')
