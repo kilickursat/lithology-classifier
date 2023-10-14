@@ -34,7 +34,7 @@ else:
 # Define a function to make predictions
 def predict(input_data):
   try:
-    predictions = pycaret.predict_model(estimator=model, data=input_data)
+    predictions = predict_model(estimator=model, data=input_data)
     return predictions['Label'][0]
   except Exception as e:
     raise st.ScriptRunner.StopExecution(e)
