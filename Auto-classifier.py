@@ -1,9 +1,17 @@
 import streamlit as st
-import pycaret
-import pickle
-import sklearn.metrics as metrics
+import pandas as pd
+from sklearn.cluster import KMeans
+from imblearn.over_sampling import SMOTE
+from clover.over_sampling import ClusterOverSampler
+from clover.distribution import DensityDistributor
+from pycaret.classification import *
 import shap
+import io
+import joblib
 import matplotlib.pyplot as plt
+import numpy as np
+import plotly.express as px
+
 
 # Load the PyCaret model
 model = pycaret.load_model('classifier-pipeline.pkl')
@@ -80,11 +88,11 @@ def user_input_features():
             st.write('Predicted lithology class:', prediction)
 
 # Calculate and display the confusion matrix
-
-plot_model(tuned_lightgbm_balanced,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'})
-
-plot_model(tuned_lightgbm_balanced,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'})
-
-interpret_model(tuned_lightgbm_balanced)
+st.write("Classification report")
+plot_model(tuned_lightgbm_balanced,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'},display_format="streamlit")
+st.write("Confusion matrix")
+plot_model(tuned_lightgbm_balanced,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'},display_format="streamlit")
+st.write("Feature Importance:")
+interpret_model(tuned_lightgbm_balanced,display_format="streamlit")
 
 
