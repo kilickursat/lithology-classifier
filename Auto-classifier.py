@@ -18,58 +18,24 @@ setup()
 model = load_model('classifier-pipeline')
 
 
-##########################################################
-# Data loading options
-data_load_option = st.radio("Data Load Option", ("Online", "Batch"))
+def predict(model, input_df):
+    predictions_df = predict_model(estimator=model, data=input_df)
+    predictions = predictions_df['Layers'][0]
+    return predictions
 
-if data_load_option == "Online":
-  # Online data loading
-  online_data = st.text_area("Enter data in CSV format")
-  if st.button("Load Data"):
-    try:
-      df = pd.read_csv(io.StringIO(online_data))
-    except Exception as e:
-      st.write(f"Error loading data: {e}")
-      df = None
+def run():
 
-else:
-  # Batch data loading
-  uploaded_file = st.file_uploader("classification_model.xlsx", type="xlsx")
-  if uploaded_file is not None:
-    try:
-      df = pd.read_excel(uploaded_file)
-    except Exception as e:
-      st.write(f"Error loading data: {e}")
-      df = None
+    #from PIL import Image
+    #image = Image.open('logo.png')
+    #image_hospital = Image.open('hospital.jpg')
 
-if df is not None:
-  # Do something with the data
-  pass
-#########################################################
-"""
-# Data loading options
-data_load_option = st.radio("Data Load Option", ("Online", "Batch"))
+    #st.image(image,use_column_width=False)
 
-if data_load_option == "Online":
-    # Online data loading
-    online_data = st.text_area("Enter data in CSV format")
-    if st.button("Load Data"):
-        df = pd.read_csv(io.StringIO(online_data))
+    add_selectbox = st.sidebar.selectbox(
+    "How would you like to predict?",
+    ("Online", "Batch"))
 
-else:
-    # Batch data loading
-    uploaded_file = st.file_uploader("classification_model.xlsx", type="xlsx")
-    if uploaded_file is not None:
-        df = pd.read_excel(uploaded_file)
 
-# Define a function to make predictions
-def predict(input_data):
-  try:
-    predictions = predict_model(estimator=model, data=input_data)
-    return predictions['Label'][0]
-  except Exception as e:
-    raise st.ScriptRunner.StopExecution(e)
-"""
 # Create a Streamlit user interface
 st.title('Tunnel Lithology Identification Classifier')
 def run():
@@ -125,5 +91,25 @@ st.write("Confusion matrix")
 plot_model(model,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'},display_format="streamlit")
 st.write("Feature Importance:")
 interpret_model(model,display_format="streamlit")
+
+
+
+    if add_selectbox == 'Batch':
+
+        file_upload = st.file_uploader("Upload csv file for predictions", type=["csv","xlsx"])
+
+        if file_upload is not None:
+            if file_upload.type == 'application/vnd.ms-excel':  # Check if the uploaded file is in Excel format
+                data = pd.read_excel(file_upload)
+            else:
+                data = pd.read_csv(file_upload)
+            
+            data = data.dropna()
+            predictions = predict_model(estimator=model,data=data)
+            st.write(predictions)
+          
+
+if __name__ == '__main__':
+    run()
 
 
