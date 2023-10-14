@@ -32,10 +32,10 @@ def run():
 
 # Create inputs for the different features of the data
     if add_selectbox == 'Online':
-        pressure_gauge1 = st.number_input('Pressure gauge 1 (kPa)', min_value=float(data['pressure_gauge1'].min()), value=0)
-        pressure_gauge2 =st.number_input('Pressure gauge 2 (kPa)', min_value=float(data['pressure_gauge2'].min()), value=0)
-        pressure_gauge3 = st.number_input('Pressure gauge 3 (kPa)', min_value=float(data['pressure_gauge3'].min()), value=0)
-        pressure_gauge4 =st.number_input('Pressure gauge 4 (kPa)', min_value=float(data['pressure_gauge4'].min()), value=0)
+        pressure_gauge1 = st.number_input('Pressure gauge 1 (kPa)', min_value=float(input_df['pressure_gauge1'].min()), value=0)
+        pressure_gauge2 =st.number_input('Pressure gauge 2 (kPa)', min_value=float(input_df['pressure_gauge2'].min()), value=0)
+        pressure_gauge3 = st.number_input('Pressure gauge 3 (kPa)', min_value=float(input_df['pressure_gauge3'].min()), value=0)
+        pressure_gauge4 =st.number_input('Pressure gauge 4 (kPa)', min_value=float(input_df['pressure_gauge4'].min()), value=0)
         digging_velocity_left = st.number_input('Digging velocity left (mm/min)', min_value=float(data['digging_velocity_left'].min()), value=0)
         digging_velocity_right = st.number_input('Digging velocity right (mm/min)', min_value=float(data['digging_velocity_right'].min()), value=0)
         shield_jack_stroke_left = st.number_input('Shield jack stroke left (mm)', min_value=float(data['shield_jack_stroke_left'].min()), value=0)
