@@ -23,18 +23,6 @@ def predict(model, input_df):
     predictions = predictions_df['Layers'][0]
     return predictions
 
-def run():
-
-    #from PIL import Image
-    #image = Image.open('logo.png')
-    #image_hospital = Image.open('hospital.jpg')
-
-    #st.image(image,use_column_width=False)
-
-    add_selectbox = st.sidebar.selectbox(
-    "How would you like to predict?",
-    ("Online", "Batch"))
-
 
 # Create a Streamlit user interface
 st.title('Tunnel Lithology Identification Classifier')
