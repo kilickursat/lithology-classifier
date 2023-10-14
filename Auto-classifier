@@ -6,7 +6,7 @@ import shap
 import matplotlib.pyplot as plt
 
 # Load the PyCaret model
-model = pycaret.load_model('my_model.pkl')
+model = pycaret.load_model('classifier-pipeline.pkl')
 
 # Define a function to make predictions
 def predict(input_data):
