@@ -72,13 +72,9 @@ def run():
         'mud_injection_pressure': mud_injection_pressure,
         'add_mud_flow': add_mud_flow,
         'back_in_injection_rate': back_in_injection_rate}
+        
         input_df = pd.DataFrame([input_dict])
-
         if st.button("Predict"):
-            output = predict(model=model, input_df=input_df)
-            output = '$' + str(output)
-
-          if st.button("Predict"):
             output = predict(model=model, input_df=input_df)
             output = '$' + str(output)
 
