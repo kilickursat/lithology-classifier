@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 
-setup(df2)
+setup()
 
 # Load the PyCaret model
 model = load_model('classifier-pipeline')
@@ -23,9 +23,6 @@ def predict(model, input_df):
     predictions = predictions_df['Layers'][0]
     return predictions
 
-
-# Create a Streamlit user interface
-st.title('Tunnel Lithology Identification Classifier')
 def run():
     add_selectbox = st.sidebar.selectbox(
     "How would you like to predict?",
@@ -34,8 +31,7 @@ def run():
     st.sidebar.info('This app is created to classify a soft ground tunnel lithology')
 
 # Create inputs for the different features of the data
-def user_input_features():
-    if add_selectbox == 'Batch':
+    if add_selectbox == 'Online':
         pressure_gauge1 = st.number_input('Pressure gauge 1 (kPa)', min_value=float(df['pressure_gauge1'].min()), value=0)
         pressure_gauge2 =st.number_input('Pressure gauge 2 (kPa)', min_value=float(df['pressure_gauge2'].min()), value=0)
         pressure_gauge3 = st.number_input('Pressure gauge 3 (kPa)', min_value=float(df['pressure_gauge3'].min()), value=0)
@@ -54,22 +50,53 @@ def user_input_features():
         mud_injection_pressure = st.number_input('Mud injection pressure (MPa)', min_value=float(df['mud_injection_pressure'].min()), value=0)
         add_mud_flow = st.number_input('Add mud flow (L/min)', min_value=float(df['add_mud_flow'].min()), value=0)
         back_in_injection_rate = st.number_input('Back in injection rate (%)', min_value=float(df['back_in_injection_rate'].min()), max_value=100, value=0)
-        """
-        tunnel_depth = st.number_input('Tunnel depth (m)', 0.0, 100.0, 50.0)
-        tunnel_diameter = st.slider('Tunnel diameter (m)', 0.0, 100.0, 50.0)
-        rock_type = st.selectbox('Rock type', ['sandstone', 'limestone', 'shale'])
-        """
         
-        output_dict = {'VCS': 0, 'VG': 1,'VSG': 2}
-        output_df = pd.DataFrame([output_dict])
+        output=""
 
+        input_dict = {
+        'pressure_gauge1': pressure_gauge1,
+        'pressure_gauge2': pressure_gauge2,
+        'pressure_gauge3': pressure_gauge3,
+        'pressure_gauge4': pressure_gauge4,
+        'digging_velocity_left': digging_velocity_left,
+        'digging_velocity_right': digging_velocity_right,
+        'shield_jack_stroke_left': shield_jack_stroke_left,
+        'shield_jack_stroke_right': shield_jack_stroke_right,
+        'propulsion_pressure': propulsion_pressure,
+        'total_thrust': total_thrust,
+        'cutter_torque': cutter_torque,
+        'cutterhead_rotation_speed': cutterhead_rotation_speed,
+        'screw_pressure': screw_pressure,
+        'screw_rotation_speed': screw_rotation_speed,
+        'gate_opening': gate_opening,
+        'mud_injection_pressure': mud_injection_pressure,
+        'add_mud_flow': add_mud_flow,
+        'back_in_injection_rate': back_in_injection_rate}
+        input_df = pd.DataFrame([input_dict])
 
         if st.button("Predict"):
             output = predict(model=model, input_df=input_df)
             output = '$' + str(output)
 
+          if st.button("Predict"):
+            output = predict(model=model, input_df=input_df)
+            output = '$' + str(output)
+
         st.success('The output is {}'.format(output))
 
+    if add_selectbox == 'Batch':
+
+        file_upload = st.file_uploader("Upload csv file for predictions", type=["csv"])
+
+        if file_upload is not None:
+            data = pd.read_csv(file_upload)
+            predictions = predict_model(estimator=model,data=data)
+            st.write(predictions)
+
+if __name__ == '__main__':
+    run()
+
+"""
         # Calculate and display the confusion matrix
         st.subheader("Classification report")
         plot_model(model,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'},display_format="streamlit")
@@ -77,25 +104,6 @@ def user_input_features():
         plot_model(model,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'},display_format="streamlit")
         st.subheader("Feature Importance:")
         interpret_model(model,display_format="streamlit")
+"""
 
-
-
-    if add_selectbox == 'Batch':
-
-        file_upload = st.file_uploader("Upload csv file for predictions", type=["csv","xlsx"])
-
-        if file_upload is not None:
-            if file_upload.type == 'application/vnd.ms-excel':  # Check if the uploaded file is in Excel format
-                data = pd.read_excel(file_upload)
-            else:
-                data = pd.read_csv(file_upload)
-            
-            data = data.dropna()
-            predictions = predict_model(estimator=model,data=data)
-            st.write(predictions)
           
-
-if __name__ == '__main__':
-    run()
-
-
