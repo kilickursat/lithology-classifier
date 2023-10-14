@@ -14,7 +14,7 @@ import plotly.express as px
 
 
 # Load the PyCaret model
-model = load_model('classifier-pipeline.pkl')
+model = load_model('classifier-pipeline')
 
 # Data loading options
 data_load_option = st.radio("Data Load Option", ("Online", "Batch"))
