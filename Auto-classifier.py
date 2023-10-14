@@ -94,13 +94,13 @@ def user_input_features():
             # Display the prediction to the user
             st.write('Predicted lithology class:', prediction)
 """
-# Calculate and display the confusion matrix
-st.write("Classification report")
-plot_model(model,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'},display_format="streamlit")
-st.write("Confusion matrix")
-plot_model(model,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'},display_format="streamlit")
-st.write("Feature Importance:")
-interpret_model(model,display_format="streamlit")
+        # Calculate and display the confusion matrix
+        st.write("Classification report")
+        plot_model(model,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'},display_format="streamlit")
+        st.write("Confusion matrix")
+        plot_model(model,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'},display_format="streamlit")
+        st.write("Feature Importance:")
+        interpret_model(model,display_format="streamlit")
 
 
 
