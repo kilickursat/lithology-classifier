@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run TBM_App_app.py
+web: sh setup.sh && streamlit run Auto-classifier.py
