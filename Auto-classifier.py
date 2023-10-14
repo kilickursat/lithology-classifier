@@ -24,7 +24,6 @@ def predict(model, input_df):
 
 
 def run():
-    setup()
     add_selectbox = st.sidebar.selectbox(
     "How would you like to predict?",
     ("Online", "Batch"))
