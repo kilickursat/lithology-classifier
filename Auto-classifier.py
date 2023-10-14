@@ -69,25 +69,13 @@ def user_input_features():
             output = '$' + str(output)
 
         st.success('The output is {}'.format(output))
-"""
-        # Create inputs for the different features of the data
-        output_lithology = st.selectbox('Output lithology', ['VSC', 'VG', 'VGS'])
-        
-        # Display a loading indicator when the user clicks the "Predict" button
-        with st.spinner('Predicting lithology class...'):
-          if st.button('Predict'):
-            # Make a prediction
-            prediction = predict({'output_lithology': output_lithology})
-        
-            # Display the prediction to the user
-            st.write('Predicted lithology class:', prediction)
-"""
+
         # Calculate and display the confusion matrix
-        st.write("Classification report")
+        st.subheader("Classification report")
         plot_model(model,plot='class_report',  plot_kwargs = {'title' : 'LightGBM Classifier Classification Report'},display_format="streamlit")
-        st.write("Confusion matrix")
+        st.subheader("Confusion matrix")
         plot_model(model,plot='confusion_matrix',  plot_kwargs = {'title' : 'LightGBM Classifier Confusion Matrix'},display_format="streamlit")
-        st.write("Feature Importance:")
+        st.subheader("Feature Importance:")
         interpret_model(model,display_format="streamlit")
 
 
